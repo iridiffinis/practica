@@ -1,0 +1,255 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;700;800&display=swap');
+
+:root {
+  --accent-orange: #fb6340;
+  --calendar-bg: #fcf9f5;
+  --circle-active: #9de3e3;
+  --text-dark: #333;
+  --border-light: #eaddd0;
+  
+  /* NOU: Culorile noului background */
+  --bg-color: #FEFCE8; 
+  --text-purple: #59168B;
+}
+
+body {
+  background: linear-gradient(135deg, #FFFBEB 0%, #FEFCE8 50%, #FEF3C6 100%);
+  margin: 0;
+}
+
+/* Stiluri specifice Formular în Bulă */
+.popover-bubble {
+  width: 350px; /* Puțin mai lat pentru formular */
+}
+
+.input-group {
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 8px;
+}
+
+.bubble-form input, .bubble-form textarea {
+  width: 100%;
+  padding: 10px 15px;
+  border: 2px solid #eaddd0;
+  border-radius: 20px;
+  font-family: 'Inter', sans-serif;
+  font-size: 0.9rem;
+  outline: none;
+  box-sizing: border-box;
+}
+
+.bubble-form textarea {
+  border-radius: 12px;
+  resize: none;
+  height: 60px;
+}
+
+/* Stiluri pentru Erori */
+.bubble-form input.error {
+  border-color: #ff4d4d;
+  background-color: #fff5f5;
+}
+
+.error-text {
+  color: #ff4d4d;
+  font-size: 0.7rem;
+  margin-left: 10px;
+  margin-top: 2px;
+  font-weight: bold;
+}
+
+.modal-actions {
+  display: flex;
+  gap: 10px;
+  margin-top: 10px;
+}
+
+.booking-page {
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+/* TOP HEADER NAVBAR (Păstrat) */
+.top-navigation {
+  width: 100%;
+  background: linear-gradient(90deg, #9810FA 0%, #AD46FF 50%, #9810FA 100%);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 20px 50px;
+  box-sizing: border-box;
+}
+
+.logo-section h2 { margin: 0; color: #FDC700; font-family: 'Inter', sans-serif; font-weight: 800; font-size: 30px; line-height: 36px; }
+.logo-section small { color: white; font-family: 'Inter', sans-serif; font-weight: 400; font-size: 14px; line-height: 20px; }
+
+.nav-links { list-style: none; display: flex; gap: 40px; align-items: center; margin: 0; padding: 0; }
+.nav-links li { cursor: pointer; color: white; font-family: 'Inter', sans-serif; font-weight: 400; font-size: 16px; line-height: 24px; }
+.nav-links li:hover:not(.active) { opacity: 0.8; }
+.nav-links li.active { background: #FDC700; color: #59168B; font-family: 'Inter', sans-serif; font-weight: 700; font-size: 16px; line-height: 24px; padding: 10px 30px; border-radius: 30px; }
+
+/* MAIN CONTENT */
+.booking-content { max-width: 900px; width: 100%; padding: 40px 20px; display: flex; flex-direction: column; align-items: center; }
+
+.booking-header { text-align: center; margin-bottom: 30px; }
+.booking-header h1 { font-size: 2.5rem; color: var(--text-purple); margin-bottom: 10px; }
+.subtitle { color: #555; font-size: 0.9rem; }
+
+/* ========================================================
+   CALENDAR WRAPPER & GRID (Actualizat pentru poziționare)
+   ======================================================== */
+.calendar-wrapper {
+  position: relative; /* Necesar pentru a poziționa bula absolut */
+  width: 100%;
+}
+
+.calendar-controls {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+  background-color: var(--text-purple);
+  color: white;
+  padding: 10px 20px;
+  box-sizing: border-box;
+  border-radius: 10px 10px 0 0; /* Rotunjim doar colțurile de sus */
+}
+
+.arrow-btn { background: none; border: none; color: white; font-size: 1.5rem; cursor: pointer; font-weight: bold; }
+
+.calendar-inner-wrapper {
+  background: white;
+  border-radius: 0 0 10px 10px;
+  overflow: hidden;
+  box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+  border: 1px solid var(--border-light);
+  border-top: none;
+}
+
+.calendar-grid { display: grid; grid-template-columns: repeat(7, 1fr); text-align: center; }
+
+.days-header { background-color: #f4eee7; color: #555; font-weight: bold; padding: 15px 0; border-bottom: 1px solid #eaddd0; }
+
+.days-body { background-color: white; }
+
+/* Zile pătrate */
+.calendar-day {
+  aspect-ratio: 1; display: flex; align-items: center; justify-content: center;
+  border-right: 1px solid #f0f0f0; border-bottom: 1px solid #f0f0f0;
+  cursor: pointer; color: var(--text-dark); font-weight: 500; transition: all 0.2s;
+}
+
+.calendar-day.empty { background-color: #fafafa; cursor: default; }
+
+/* --- ZILE DEZACTIVATE (Mon-Thu) --- */
+.calendar-day.disabled {
+    cursor: not-allowed;
+    background-color: #f9f9f9;
+}
+.calendar-day.disabled .day-number {
+    opacity: 0.3; /* Le facem foarte faded */
+    position: relative;
+}
+/* Adăugăm un mic "X" sau indicator vizual pe hover pe cele dezactivate */
+.calendar-day.disabled:hover::after {
+    content: '\2613'; /* Un simbol 'X' mic */
+    position: absolute;
+    color: #ccc;
+    font-size: 0.8rem;
+}
+
+.day-number { width: 45px; height: 45px; display: flex; align-items: center; justify-content: center; border-radius: 50%; transition: all 0.2s; }
+
+/* Efect hover doar pe zilele active (isBookable) */
+.calendar-day:not(.empty):not(.disabled):hover .day-number { background-color: #f0f0f0; }
+
+.calendar-day.selected .day-number {
+  background-color: var(--circle-active);
+  color: var(--text-dark);
+  font-weight: bold;
+}
+
+/* ========================================================
+   THINKING BUBBLE (Popover / Speech Bubble) STYLES
+   ======================================================== */
+.popover-bubble {
+  position: absolute;
+  background: white;
+  color: var(--text-dark);
+  width: 300px; /* Compact */
+  border-radius: 12px;
+  box-shadow: 0 10px 25px rgba(0,0,0,0.2);
+  z-index: 500; /* Asigură că e deasupra calendarului */
+  animation: popInBubble 0.3s ease-out;
+  border: 1px solid #eee;
+  padding-bottom: 10px;
+}
+
+@keyframes popInBubble {
+  from { transform: translateX(-50%) translateY(-10px); opacity: 0; }
+  to { transform: translateX(-50%) translateY(0); opacity: 1; }
+}
+
+/* Săgeata bulei */
+.bubble-arrow {
+  position: absolute;
+  top: -10px; /* Deasupra bulei */
+  transform: translateX(-50%) rotate(45deg);
+  width: 20px;
+  height: 20px;
+  background-color: white;
+  border-top: 1px solid #eee;
+  border-left: 1px solid #eee;
+}
+
+.close-bubble-btn {
+  position: absolute; top: 8px; right: 10px;
+  background: none; border: none; color: #aaa;
+  font-size: 1.3rem; cursor: pointer; z-index: 501;
+}
+.close-bubble-btn:hover { color: #333; }
+
+.bubble-body { padding: 15px 20px; }
+.bubble-body h3 { margin: 0 0 15px; font-size: 1.1rem; text-align: center; color: var(--text-purple); }
+
+/* Listă ore în stil bubble (Interactiv) */
+.bubble-list { display: flex; flex-direction: column; gap: 10px; }
+
+.bubble-slot-card {
+    background: #fcfcfc;
+    border: 1px solid #eee;
+    border-radius: 8px;
+    padding: 10px 15px;
+    cursor: pointer;
+    transition: 0.2s;
+    text-align: center;
+}
+.bubble-slot-card:hover { border-color: var(--accent-orange); background: #fffcfb; }
+.bubble-slot-card strong { display: block; margin-bottom: 2px; }
+.bubble-slot-card span { font-size: 0.75rem; color: #777; }
+
+/* Stiluri Formular în interiorul bulei */
+.bubble-form { display: flex; flex-direction: column; gap: 10px; }
+.bubble-summary { font-size: 0.85rem; padding: 10px; margin-bottom: 15px; background: #f8f4ff; text-align: center; font-weight: bold; color: var(--text-purple); border-radius: 8px; }
+
+.bubble-form .form-row { display: flex; gap: 8px; }
+.bubble-form input { width: 100%; padding: 8px 12px; border: 1px solid #ddd; border-radius: 20px; box-sizing: border-box; outline: none; font-family: inherit; font-size: 0.9rem; }
+.bubble-form input:focus { border-color: var(--accent-orange); }
+
+.modal-actions { display: flex; gap: 8px; margin-top: 15px; }
+
+.btn-orange {
+  background: var(--accent-orange); color: white;
+  border: none; padding: 10px 20px; border-radius: 25px;
+  font-weight: bold; cursor: pointer; font-size: 0.9rem; transition: 0.3s;
+  flex: 1; text-align: center;
+}
+.btn-orange.cancel { background: #ff8c73; }
+.btn-orange:hover { background: #fa4d23; }
+
+.bubble-success { text-align: center; padding: 10px 0; }
+.bubble-success h3 { color: #155724; }
